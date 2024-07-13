@@ -1,6 +1,7 @@
 module com.example.bibliotekagier {
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.json;
 
     requires org.controlsfx.controls;
 
