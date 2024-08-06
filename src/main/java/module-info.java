@@ -14,6 +14,8 @@ module com.example.bibliotekagier {
     opens com.example.bibliotekagier to javafx.fxml;
     exports com.example.bibliotekagier;
     exports com.example.bibliotekagier.database;
+    exports com.example.bibliotekagier.controllers;
     opens com.example.bibliotekagier.database to javafx.fxml, org.hibernate.orm.core;
+    opens com.example.bibliotekagier.controllers to javafx.fxml;
 
 }

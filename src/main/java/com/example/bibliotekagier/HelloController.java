@@ -1,7 +1,9 @@
 package com.example.bibliotekagier;
 
 import com.example.bibliotekagier.database.Database;
-import com.example.bibliotekagier.database.Profile;
+import com.example.bibliotekagier.database.Profil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,11 +29,6 @@ public class HelloController implements Initializable {
         Parent fxml = FXMLLoader.load(getClass().getResource("scene/rate.fxml"));
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
-        System.out.println("test");
-        Database database = new Database();
-        //List<Profile> p = database.getProfile();
-        //p.forEach(System.out::println);
-        System.out.println("test2");
     }
 
     @FXML
