@@ -1,5 +1,6 @@
 package com.example.bibliotekagier.controllers;
 
+import com.example.bibliotekagier.SteamAPI;
 import com.example.bibliotekagier.database.Database;
 import com.example.bibliotekagier.database.Profil;
 import javafx.collections.FXCollections;
@@ -10,12 +11,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StreamCorruptedException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +41,19 @@ public class ProfileController implements Initializable {
     @FXML
     private Label labelWybierzProfil;
     @FXML
-    private StackPane contentAreaProfile;
+    private TextField profileName;
+    @FXML
+    private TextField profileSteamApi;
+    @FXML
+    private TextField profileUserLogin;
+    @FXML
+    private AnchorPane contentAreaProfileEdit;
+    @FXML
+    private AnchorPane contentAreaProfileDelete;
+    @FXML
+    private Button nie;
+    @FXML
+    private Button tak;
 
     public ProfileController(Database database, List<Profil> profile) {
         this.database = database;
@@ -58,6 +75,24 @@ public class ProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        setupListViewProfile();
+
+        contentAreaProfileEdit.setVisible(false);
+        contentAreaProfileDelete.setVisible(false);
+
+    }
+
+    private void setupSteamApi() {
+        Profil profil = profile.get(indexListViewProfile);
+        String apiKey = profil.getSteamapikey();
+        String login = profil.getSteamuserlogin();
+        SteamAPI steamAPI = new SteamAPI(apiKey, login);
+    }
+
+    private void setupListViewProfile(){
+
+        profile = database.getProfile();
+
         List<String> nazwa_profil = new ArrayList<>(15);
 
         String temp;
@@ -71,13 +106,17 @@ public class ProfileController implements Initializable {
         if (indexListViewProfile != -1){
             setupLabelWybierzProfil();
         }
-
     }
 
     @FXML
     public void eventMouseClicked(Event event) {
         indexListViewProfile = listViewProfile.getSelectionModel().getSelectedIndex();
         setupLabelWybierzProfil();
+        try {
+            setupSteamApi();
+        }catch (Exception e){
+            System.err.println("Błąd połączenia z SteamAPI");
+        }
     }
 
     private void setupLabelWybierzProfil(){
@@ -87,30 +126,59 @@ public class ProfileController implements Initializable {
 
     @FXML
     public void edit(ActionEvent actionEvent) throws IOException {
-        /*
-        if (profileEditController == null){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("scene/profileEdit.fxml"));
+        contentAreaProfileEdit.setVisible(true);
+    }
 
-            loader.setControllerFactory(param -> {
-                profileEditController = new ProfileEditController(database);
-                return profileEditController;
-            });
+    @FXML
+    public void saveEditProfile(ActionEvent actionEvent) {
 
-            Parent fxmlExit = loader.load();
-            profileEditController.setRoot(fxmlExit);
+        if (indexListViewProfile == -1){
+            labelWybierzProfil.setText("Aby edytować, wybierz profil");
+        }
+        else {
+            String name = profileName.getText();
+            String apiKey = profileSteamApi.getText();
+            String login = profileUserLogin.getText();
+            Profil profil = profile.get(indexListViewProfile);
+            Long index = profil.getId_profilu();
+
+            if (name.equals("____BRAK____")){
+                labelWybierzProfil.setText("Nie można nadać takiej nazwy");
+            }
+            else if (profil.getNazwa_profil().equals("____BRAK____")  && (name.isEmpty() || apiKey.isEmpty() || login.isEmpty()) ){
+                labelWybierzProfil.setText("Przy dodawaniu profilu uzupełnij wszystkie pola");
+            }
+            else {
+                setupLabelWybierzProfil();
+                database.updateProfile(index, name, apiKey, login);
+                setupListViewProfile();
+                contentAreaProfileEdit.setVisible(false);
+            }
+        }
+    }
+
+    @FXML
+    public void delete(ActionEvent actionEvent) {
+        if (indexListViewProfile == -1){
+            labelWybierzProfil.setText("Nie wybrano żadnego profilu");
+        }
+        else {
+            contentAreaProfileDelete.setVisible(true);
+        }
+    }
+
+    @FXML
+    public void deleteChoice(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        String buttonId = button.getId();
+
+        if (buttonId.equals("tak")){
+            Long index = profile.get(indexListViewProfile).getId_profilu();
+            String remove = "____BRAK____";
+            database.updateProfile(index, remove, remove, remove);
+            setupListViewProfile();
         }
 
-        contentAreaProfile.getChildren().removeAll();
-        contentAreaProfile.getChildren().setAll(profileEditController.getRoot());
-         */
-
-
-        Parent fxml = FXMLLoader.load(this.getClass().getResource("profileEdit.fxml"));
-        contentAreaProfile.getChildren().removeAll();
-        contentAreaProfile.getChildren().setAll(fxml);
-
-
-
-
+        contentAreaProfileDelete.setVisible(false);
     }
 }

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -14,9 +15,8 @@
          <right>
             <AnchorPane prefHeight="483.0" prefWidth="133.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="15.0" layoutY="186.0" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="103.0" text="Edytuj" />
-                  <Button layoutX="15.0" layoutY="242.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Usun" />
-                  <Button layoutX="17.0" layoutY="131.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Wybierz" />
+                  <Button layoutX="15.0" layoutY="188.0" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="103.0" text="Edytuj" />
+                  <Button layoutX="15.0" layoutY="242.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="103.0" text="Usun" />
                </children>
             </AnchorPane>
          </right>
@@ -31,7 +31,27 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="labelWybierzProfil" alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="256.0" text="Wybierz profil" textOverrun="WORD_ELLIPSIS" wrapText="true" />
-                  <StackPane fx:id="contentAreaProfile" layoutY="44.0" prefHeight="438.0" prefWidth="257.0" />
+                  <StackPane layoutY="44.0" prefHeight="438.0" prefWidth="257.0">
+                     <children>
+                        <AnchorPane fx:id="contentAreaProfileEdit" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="257.0" visible="false">
+                           <children>
+                              <TextField fx:id="profileName" layoutX="3.0" layoutY="91.0" prefHeight="25.0" prefWidth="251.0" />
+                              <TextField fx:id="profileSteamApi" layoutX="3.0" layoutY="194.0" prefHeight="25.0" prefWidth="251.0" />
+                              <TextField fx:id="profileUserLogin" layoutX="3.0" layoutY="296.0" prefHeight="25.0" prefWidth="251.0" />
+                              <Label alignment="CENTER" layoutX="5.0" layoutY="74.0" prefHeight="17.0" prefWidth="251.0" text="Nazwa profilu" />
+                              <Label alignment="CENTER" layoutX="5.0" layoutY="177.0" prefHeight="17.0" prefWidth="251.0" text="Steam API Key" />
+                              <Label alignment="CENTER" layoutX="5.0" layoutY="279.0" prefHeight="17.0" prefWidth="251.0" text="Steam User Login" />
+                              <Button layoutX="3.0" layoutY="365.0" mnemonicParsing="false" onAction="#saveEditProfile" prefHeight="25.0" prefWidth="251.0" text="Zapisz" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="contentAreaProfileDelete" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="34.0" layoutY="53.0" prefHeight="96.0" prefWidth="189.0" text="Czy jesteś pewien, że chcesz usunąć ten profil?" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+                              <Button fx:id="nie" layoutX="34.0" layoutY="206.0" mnemonicParsing="false" onAction="#deleteChoice" prefHeight="41.0" prefWidth="75.0" text="Nie" />
+                              <Button fx:id="tak" layoutX="148.0" layoutY="206.0" mnemonicParsing="false" onAction="#deleteChoice" prefHeight="41.0" prefWidth="75.0" text="Tak" />
+                           </children>
+                        </AnchorPane>
+                     </children></StackPane>
                </children>
             </AnchorPane>
          </center>
