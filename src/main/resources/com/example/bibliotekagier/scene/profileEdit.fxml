@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="438.0" prefWidth="257.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bibliotekagier.controllers.ProfileEditController">
+   <children>
+      <TextField fx:id="profileName" layoutX="3.0" layoutY="76.0" prefHeight="25.0" prefWidth="251.0" />
+      <TextField fx:id="profileSteamApi" layoutX="3.0" layoutY="194.0" prefHeight="25.0" prefWidth="251.0" />
+      <TextField fx:id="profileUserLogin" layoutX="3.0" layoutY="296.0" prefHeight="25.0" prefWidth="251.0" />
+      <Label alignment="CENTER" layoutX="5.0" layoutY="59.0" prefHeight="17.0" prefWidth="251.0" text="Nazwa profilu" />
+      <Label alignment="CENTER" layoutX="5.0" layoutY="177.0" prefHeight="17.0" prefWidth="251.0" text="Steam API Key" />
+      <Label alignment="CENTER" layoutX="5.0" layoutY="279.0" prefHeight="17.0" prefWidth="251.0" text="Steam User Login" />
+   </children>
+</AnchorPane>

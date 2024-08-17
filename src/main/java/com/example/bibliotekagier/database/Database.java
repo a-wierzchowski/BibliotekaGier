@@ -9,9 +9,10 @@ import javax.persistence.*;
 
 
 public class Database {
-    private static final EntityManagerFactory FACTORY = Persistence.createEntityManagerFactory("MyUnit");
+    private static EntityManagerFactory FACTORY;
 
     public Database() {
+            FACTORY = Persistence.createEntityManagerFactory("MyUnit");
     }
 
     /*
@@ -22,7 +23,7 @@ public class Database {
          */
     public List<Profil> getProfile() {
         EntityManager em = FACTORY.createEntityManager();
-        Query query = em.createQuery("SELECT p FROM Profil p");
+        Query query = em.createQuery("SELECT p FROM Profil p ORDER BY p.id_profilu");
         return query.getResultList();
     }
 }

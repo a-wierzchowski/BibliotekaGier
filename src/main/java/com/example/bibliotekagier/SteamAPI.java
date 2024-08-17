@@ -22,7 +22,7 @@ public class SteamAPI {
 
     private final String  apiKey;
     private final String userLogin;
-    private  String steamID;
+    private String steamID;
 
     class Game {
         String name;
@@ -39,6 +39,7 @@ public class SteamAPI {
 
         initSteamID();
         initListaGier();
+
     }
 
     private JSONObject getJSON(URL url){
@@ -127,9 +128,9 @@ public class SteamAPI {
         }
     }
 
-    public void steamGameInfo(Long appID){
+    public void steamGameInfo(Integer appID){
         SteamWebApiClient client = new SteamWebApiClient.SteamWebApiClientBuilder(apiKey).build();
-        GetSchemaForGameRequest req = SteamWebApiRequestFactory.createGetSchemaForGameRequest(Integer.valueOf(steamID));
+        GetSchemaForGameRequest req = SteamWebApiRequestFactory.createGetSchemaForGameRequest(appID);
         GetSchemaForGame game = null;
         try {
             game = client.<GetSchemaForGame> processRequest(req);
