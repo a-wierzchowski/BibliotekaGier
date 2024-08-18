@@ -36,7 +36,16 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#addGame" prefHeight="42.0" prefWidth="142.0" text="Dodawanie Gier">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#addToLibrary" prefHeight="42.0" prefWidth="142.0" text="Dodaj do Biblioteki">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/profile.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#addGame" prefHeight="42.0" prefWidth="142.0" text="Dodaj grę">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>

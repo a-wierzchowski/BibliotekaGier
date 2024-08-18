@@ -87,6 +87,7 @@ public class ProfileController implements Initializable {
         String apiKey = profil.getSteamapikey();
         String login = profil.getSteamuserlogin();
         SteamAPI steamAPI = new SteamAPI(apiKey, login);
+
     }
 
     private void setupListViewProfile(){

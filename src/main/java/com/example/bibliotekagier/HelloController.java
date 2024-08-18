@@ -1,8 +1,11 @@
 package com.example.bibliotekagier;
 
+import com.example.bibliotekagier.controllers.AddGameController;
+import com.example.bibliotekagier.controllers.AddToLibraryController;
 import com.example.bibliotekagier.controllers.ListGameController;
 import com.example.bibliotekagier.controllers.ProfileController;
 import com.example.bibliotekagier.database.Database;
+import com.example.bibliotekagier.database.Platformy;
 import com.example.bibliotekagier.database.Profil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +33,10 @@ public class HelloController implements Initializable {
     private Database database;
     private ProfileController profileController;
     private ListGameController listGameController;
+    private AddGameController addGameController;
+    private AddToLibraryController addToLibraryController;
     private List<Profil> profile;
+    private List<Platformy> platformy;
 
     @FXML
     public void rate(ActionEvent actionEvent) throws IOException {
@@ -41,7 +47,23 @@ public class HelloController implements Initializable {
 
     @FXML
     public void addGame(ActionEvent actionEvent) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("scene/addGame.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scene/addGame.fxml"));
+
+        loader.setControllerFactory(param -> {
+            addGameController = new AddGameController(database);
+            return addGameController;
+        });
+
+        Parent fxml = loader.load();
+        addGameController.setRoot(fxml);
+
+        contentArea.getChildren().removeAll();
+        contentArea.getChildren().setAll(addGameController.getRoot());
+
+    }
+    @FXML
+    public void addToLibrary(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scene/addToLibrary.fxml"));
 
         int index = getIndexProfile();
 
@@ -49,10 +71,18 @@ public class HelloController implements Initializable {
             profileError();
         }
         else {
-            contentArea.getChildren().removeAll();
-            contentArea.getChildren().setAll(fxml);
-        }
 
+            loader.setControllerFactory(param -> {
+                addToLibraryController = new AddToLibraryController(database, platformy, index);
+                return addToLibraryController;
+            });
+
+            Parent fxml = loader.load();
+            addToLibraryController.setRoot(fxml);
+
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(addToLibraryController.getRoot());
+        }
     }
 
     private void profileError() throws IOException {
@@ -141,10 +171,13 @@ public class HelloController implements Initializable {
         }
 
         profile = database.getProfile();
+        platformy = database.getPlatformy();
 
         exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
 
     }
+
+
 }
