@@ -2,14 +2,16 @@ package com.example.bibliotekagier.controllers;
 
 import com.example.bibliotekagier.SteamAPI;
 import com.example.bibliotekagier.database.Database;
+import com.example.bibliotekagier.database.Gry;
 import com.example.bibliotekagier.database.Platformy;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.SplitMenuButton;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,13 +27,13 @@ public class AddToLibraryController implements Initializable {
 
     private int indexListViewProfile;
     @javafx.fxml.FXML
-    private ComboBox comboBoxTitle;
-    @javafx.fxml.FXML
     private ComboBox comboBoxPlatformy;
     @javafx.fxml.FXML
     private ComboBox comboBoxStatus;
-    @javafx.fxml.FXML
-    private SplitMenuButton SplitMenuButtonTitle;
+    @FXML
+    private TextField textFieldFindTitle;
+    @FXML
+    private ListView listViewListaTitle;
 
     public AddToLibraryController(Database database, List<Platformy> platformy, int index) {
         this.database = database;
@@ -51,7 +53,6 @@ public class AddToLibraryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupComboBoxStatus();
         setupComboBoxPlatformy();
-        setupComboBoxTitle();
     }
 
     private void setupComboBoxPlatformy(){
@@ -79,18 +80,42 @@ public class AddToLibraryController implements Initializable {
         ObservableList<String> observableStatusList = FXCollections.observableList(listaStatus);
         comboBoxStatus.setItems(observableStatusList);
     }
-
-    private void setupComboBoxTitle(){
-        List<String> nazwa_platformy  = new ArrayList<>();
+    @FXML
+    public void textFieldFindTitleAction(Event event) {
+        String title = textFieldFindTitle.getText().toUpperCase();
+        if (title.isEmpty()) {
+            return;
+        }
+        List<Gry> query = database.findTitleGame(title);
+        List<String> listaTitle = new ArrayList<>();
 
         String temp;
 
-        for (Platformy p : platformy) {
-            temp = p.getNazwa_platformy();
-            nazwa_platformy.add(temp);
+        for (Gry g : query) {
+            temp = g.getTytul_gry();
+            listaTitle.add(temp);
         }
 
-        ObservableList<String> observablePlatformName = FXCollections.observableList(nazwa_platformy);
-        comboBoxTitle.setItems(observablePlatformName);
+        ObservableList<String> observablePlatformName = FXCollections.observableList(listaTitle);
+        listViewListaTitle.setItems(observablePlatformName);
+    }
+
+    @FXML
+    public void buttonAddToLibrary(ActionEvent actionEvent) {
+        String title = "";
+        ObservableList temp = listViewListaTitle.getSelectionModel().getSelectedItems();
+        if (!temp.isEmpty()){
+            title = temp.get(0).toString();
+        }
+        String platforma = "";
+        if (comboBoxPlatformy.getValue() != null){
+            platforma = comboBoxPlatformy.getValue().toString();
+        }
+        String status = "";
+        if (comboBoxStatus.getValue() != null){
+            status = comboBoxStatus.getValue().toString();
+        }
+
+
     }
 }

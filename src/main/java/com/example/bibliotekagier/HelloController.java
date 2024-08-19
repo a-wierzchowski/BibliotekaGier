@@ -150,11 +150,12 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        database = new Database();
         // Obsługa braku połączenia z bazą danych
-        boolean connected = false;
+        /*boolean connected = false;
         while (!connected){
             try {
-                database = new Database();
+
                 connected = true;
             } catch (Exception e){
                 System.out.println("Błąd połączenia, ponowna próba połączenia");
@@ -168,7 +169,7 @@ public class HelloController implements Initializable {
                 }
                 System.out.println();
             }
-        }
+        }*/
 
         profile = database.getProfile();
         platformy = database.getPlatformy();

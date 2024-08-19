@@ -87,7 +87,7 @@ public class AddGameController implements Initializable {
     }
 
     @FXML
-    public void textFieldFindTitleAction2(Event event) {
+    public void textFieldFindTitleAction(Event event) {
         String title = textFieldFindTitle.getText().toUpperCase();
         if (title.isEmpty()) {
             return;

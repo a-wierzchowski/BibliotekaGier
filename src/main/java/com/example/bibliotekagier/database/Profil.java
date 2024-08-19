@@ -2,6 +2,8 @@ package com.example.bibliotekagier.database;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "profil")
@@ -15,16 +17,35 @@ public class Profil {
     private Date data_rejestracji;
     private Integer calkowita_liczba_godzin;
 
-    @Override
-    public String toString() {
-        return "Profil{" +
-                "id_profilu=" + id_profilu +
-                ", nazwa_profil='" + nazwa_profil + '\'' +
-                ", steamapikey='" + steamapikey + '\'' +
-                ", steamuserlogin='" + steamuserlogin + '\'' +
-                ", data_rejestracji='" + data_rejestracji + '\'' +
-                ", calkowita_liczba_godzin=" + calkowita_liczba_godzin +
-                '}';
+    @OneToMany(mappedBy = "id_profilu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Posiadane> posiadane = new HashSet<>();
+
+    public void setId_profilu(Long id_profilu) {
+        this.id_profilu = id_profilu;
+    }
+
+    public void setNazwa_profil(String nazwa_profil) {
+        this.nazwa_profil = nazwa_profil;
+    }
+
+    public void setSteamapikey(String steamapikey) {
+        this.steamapikey = steamapikey;
+    }
+
+    public void setSteamuserlogin(String steamuserlogin) {
+        this.steamuserlogin = steamuserlogin;
+    }
+
+    public void setData_rejestracji(Date data_rejestracji) {
+        this.data_rejestracji = data_rejestracji;
+    }
+
+    public void setCalkowita_liczba_godzin(Integer calkowita_liczba_godzin) {
+        this.calkowita_liczba_godzin = calkowita_liczba_godzin;
+    }
+
+    public void setPosiadane(Set<Posiadane> posiadane) {
+        this.posiadane = posiadane;
     }
 
     public Long getId_profilu() {
@@ -51,27 +72,7 @@ public class Profil {
         return calkowita_liczba_godzin;
     }
 
-    public void setId_profilu(Long id_profilu) {
-        this.id_profilu = id_profilu;
-    }
-
-    public void setNazwa_profil(String nazwa_profil) {
-        this.nazwa_profil = nazwa_profil;
-    }
-
-    public void setSteamapikey(String steamapikey) {
-        this.steamapikey = steamapikey;
-    }
-
-    public void setSteamuserlogin(String steamuserlogin) {
-        this.steamuserlogin = steamuserlogin;
-    }
-
-    public void setData_rejestracji(Date data_rejestracji) {
-        this.data_rejestracji = data_rejestracji;
-    }
-
-    public void setCalkowita_liczba_godzin(Integer calkowita_liczba_godzin) {
-        this.calkowita_liczba_godzin = calkowita_liczba_godzin;
+    public Set<Posiadane> getPosiadane() {
+        return posiadane;
     }
 }

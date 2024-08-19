@@ -42,7 +42,7 @@
          <children>
             <Label layoutX="25.0" layoutY="26.0" prefHeight="74.0" prefWidth="224.0" text="Sprawdź czy dana gra już jest w systemie" />
             <Label layoutX="91.0" layoutY="100.0" prefHeight="17.0" prefWidth="92.0" text="Fragment Tytułu" />
-            <TextField fx:id="textFieldFindTitle" layoutX="63.0" layoutY="133.0" onKeyTyped="#textFieldFindTitleAction2" />
+            <TextField fx:id="textFieldFindTitle" layoutX="63.0" layoutY="133.0" onKeyTyped="#textFieldFindTitleAction" />
             <ListView fx:id="listViewListaTitle" layoutX="37.0" layoutY="196.0" prefHeight="200.0" prefWidth="200.0" />
             <Label layoutX="95.0" layoutY="179.0" text="Lista pasujących" />
          </children>
