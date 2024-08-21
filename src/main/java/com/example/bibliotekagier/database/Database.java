@@ -92,5 +92,46 @@ public class Database {
         entitymanager.close();
     }
 
+    public void addGameToLibrary(String title, String platforma, String status, Long indexProfil){
+
+        System.out.println(indexProfil);
+
+        EntityManager entitymanager = FACTORY.createEntityManager();
+
+        Query query = entitymanager.createQuery("SELECT g FROM Gry g WHERE g.tytul_gry = :title");
+        query.setParameter("title", title);
+        Gry gra = (Gry) query.getSingleResult();
+
+        query = entitymanager.createQuery("SELECT p FROM Platformy p WHERE p.nazwa_platformy = :palatforma");
+        query.setParameter("palatforma", platforma);
+        Platformy platformy = (Platformy) query.getSingleResult();
+
+        query = entitymanager.createQuery("SELECT p FROM Profil p WHERE p.id_profilu = :indexProfil");
+        query.setParameter("indexProfil", indexProfil);
+        Profil profil = (Profil) query.getSingleResult();
+
+        Long id_gry = gra.getId_gry();
+        Long id_platformy = platformy.getId_platformy();
+
+        query = entitymanager.createQuery("SELECT COUNT(p) FROM Posiadane p WHERE p.id_gry = :id_gry AND p.id_platformy = :id_platformy");
+        query.setParameter("id_gry", gra);
+        query.setParameter("id_platformy", platformy);
+        Long exist = (Long) query.getSingleResult();
+        if (exist > 0)
+            throw new IllegalArgumentException("Gra o tytule '" + title + "' na platformie '" + platforma + "' już jest w Bibliotece");
+
+        EntityTransaction transaction = entitymanager.getTransaction();
+        transaction.begin();
+
+        Posiadane posiadane = new Posiadane();
+        posiadane.setId_gry(gra);
+        posiadane.setId_platformy(platformy);
+        posiadane.setStatus(status);
+        posiadane.setId_profilu(profil);
+        entitymanager.merge(posiadane);
+        transaction.commit();
+        entitymanager.close();
+    }
+
 
 }

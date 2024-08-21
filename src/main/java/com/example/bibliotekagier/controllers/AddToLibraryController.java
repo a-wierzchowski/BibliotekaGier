@@ -34,6 +34,8 @@ public class AddToLibraryController implements Initializable {
     private TextField textFieldFindTitle;
     @FXML
     private ListView listViewListaTitle;
+    @FXML
+    private Label labelResult;
 
     public AddToLibraryController(Database database, List<Platformy> platformy, int index) {
         this.database = database;
@@ -116,6 +118,14 @@ public class AddToLibraryController implements Initializable {
             status = comboBoxStatus.getValue().toString();
         }
 
+        try {
+            database.addGameToLibrary(title, platforma, status, (long) indexListViewProfile+1);
+        }
+        catch (IllegalArgumentException e){
+            labelResult.setText(e.getMessage());
+            return;
+        }
+        labelResult.setText("Gra '" + title + "' została dodana do Biblioteki");
 
     }
 }
