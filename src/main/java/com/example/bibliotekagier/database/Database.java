@@ -1,6 +1,7 @@
 package com.example.bibliotekagier.database;
 
 import com.lukaspradel.steamapi.data.json.ownedgames.Game;
+import javafx.geometry.Pos;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,6 +33,12 @@ public class Database {
     public List<Platformy> getPlatformy() {
         EntityManager em = FACTORY.createEntityManager();
         Query query = em.createQuery("SELECT p FROM Platformy p ORDER BY p.id_platformy ");
+        return query.getResultList();
+    }
+    public List<Posiadane> getPosiadane(Long profil) {
+        EntityManager em = FACTORY.createEntityManager();
+        Query query = em.createQuery("SELECT p FROM Posiadane p WHERE p.id_profilu.id_profilu = :profil");
+        query.setParameter("profil", profil);
         return query.getResultList();
     }
 

@@ -6,16 +6,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bibliotekagier.controllers.ListGameController">
    <children>
-      <TableView prefHeight="483.0" prefWidth="558.0">
+      <TableView fx:id="tableColumn" prefHeight="483.0" prefWidth="558.0">
         <columns>
-          <TableColumn prefWidth="106.0" text="Tytuł" />
-          <TableColumn prefWidth="44.0" text="Steam" />
-            <TableColumn prefWidth="51.0" text="GOG" />
-            <TableColumn prefWidth="48.0" text="Epic" />
-            <TableColumn prefWidth="87.0" text="PlayStation" />
-            <TableColumn prefWidth="57.0" text="Xbox" />
-            <TableColumn prefWidth="91.0" text="Fizyczna Kopia" />
-            <TableColumn prefWidth="88.0" text="Status" />
+          <TableColumn fx:id="tableColumnTitle" prefWidth="106.0" text="Tytuł" />
+          <TableColumn fx:id="tableColumnSteam" prefWidth="44.0" text="Steam" />
+            <TableColumn fx:id="tableColumnGOG" prefWidth="51.0" text="GOG" />
+            <TableColumn fx:id="tableColumnEpic" prefWidth="48.0" text="Epic" />
+            <TableColumn fx:id="tableColumnPlayStation" prefWidth="87.0" text="PlayStation" />
+            <TableColumn fx:id="tableColumnXbox" prefWidth="57.0" text="Xbox" />
+            <TableColumn fx:id="tableColumnPhysical" prefWidth="91.0" text="Fizyczna Kopia" />
+            <TableColumn fx:id="tableColumnStatus" prefWidth="88.0" text="Status" />
         </columns>
       </TableView>
    </children>

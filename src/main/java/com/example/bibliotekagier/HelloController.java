@@ -37,9 +37,12 @@ public class HelloController implements Initializable {
     private AddToLibraryController addToLibraryController;
     private List<Profil> profile;
     private List<Platformy> platformy;
+    @FXML
+    private Label labelWelcomeProfile;
 
     @FXML
     public void rate(ActionEvent actionEvent) throws IOException {
+        setupLabelWelcomeProfile();
         Parent fxml = FXMLLoader.load(getClass().getResource("scene/rate.fxml"));
         contentArea.getChildren().removeAll();
         contentArea.getChildren().setAll(fxml);
@@ -47,6 +50,7 @@ public class HelloController implements Initializable {
 
     @FXML
     public void addGame(ActionEvent actionEvent) throws IOException {
+        setupLabelWelcomeProfile();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene/addGame.fxml"));
 
         loader.setControllerFactory(param -> {
@@ -63,6 +67,7 @@ public class HelloController implements Initializable {
     }
     @FXML
     public void addToLibrary(ActionEvent actionEvent) throws IOException {
+        setupLabelWelcomeProfile();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene/addToLibrary.fxml"));
 
         int index = getIndexProfile();
@@ -86,6 +91,7 @@ public class HelloController implements Initializable {
     }
 
     private void profileError() throws IOException {
+        setupLabelWelcomeProfile();
         System.err.println("Brak wybranego profilu");
         Parent fxml = FXMLLoader.load(getClass().getResource("scene/profileError.fxml"));
         contentArea.getChildren().removeAll();
@@ -94,6 +100,7 @@ public class HelloController implements Initializable {
 
     @FXML
     public void profile(ActionEvent actionEvent) throws IOException {
+        labelWelcomeProfile.setText("");
         if (profileController == null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("scene/profile.fxml"));
 
@@ -112,7 +119,7 @@ public class HelloController implements Initializable {
 
     @FXML
     public void listGame(ActionEvent actionEvent) throws IOException {
-
+        setupLabelWelcomeProfile();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scene/listGame.fxml"));
         int index = getIndexProfile();
 
@@ -146,16 +153,22 @@ public class HelloController implements Initializable {
         }
         return -1;
     }
+    private void setupLabelWelcomeProfile(){
+        int index = getIndexProfile();
+        if ( index != -1){
+            String profleName = profile.get(index).getNazwa_profil();
+            labelWelcomeProfile.setText("Witaj: " + profleName);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        database = new Database();
         // Obsługa braku połączenia z bazą danych
-        /*boolean connected = false;
+        boolean connected = false;
         while (!connected){
             try {
-
+                database = new Database();
                 connected = true;
             } catch (Exception e){
                 System.out.println("Błąd połączenia, ponowna próba połączenia");
@@ -169,7 +182,7 @@ public class HelloController implements Initializable {
                 }
                 System.out.println();
             }
-        }*/
+        }
 
         profile = database.getProfile();
         platformy = database.getPlatformy();
