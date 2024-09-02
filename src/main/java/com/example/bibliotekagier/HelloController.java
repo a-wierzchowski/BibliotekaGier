@@ -1,9 +1,6 @@
 package com.example.bibliotekagier;
 
-import com.example.bibliotekagier.controllers.AddGameController;
-import com.example.bibliotekagier.controllers.AddToLibraryController;
-import com.example.bibliotekagier.controllers.ListGameController;
-import com.example.bibliotekagier.controllers.ProfileController;
+import com.example.bibliotekagier.controllers.*;
 import com.example.bibliotekagier.database.Database;
 import com.example.bibliotekagier.database.Platformy;
 import com.example.bibliotekagier.database.Profil;
@@ -33,6 +30,7 @@ public class HelloController implements Initializable {
     private Database database;
     private ProfileController profileController;
     private ListGameController listGameController;
+    private RateController rateController;
     private AddGameController addGameController;
     private AddToLibraryController addToLibraryController;
     private List<Profil> profile;
@@ -43,9 +41,26 @@ public class HelloController implements Initializable {
     @FXML
     public void rate(ActionEvent actionEvent) throws IOException {
         setupLabelWelcomeProfile();
-        Parent fxml = FXMLLoader.load(getClass().getResource("scene/rate.fxml"));
-        contentArea.getChildren().removeAll();
-        contentArea.getChildren().setAll(fxml);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scene/rate.fxml"));
+
+        int index = getIndexProfile();
+
+        if (index == -1){
+            profileError();
+        }
+        else {
+
+            loader.setControllerFactory(param -> {
+                rateController = new RateController(database, index);
+                return rateController;
+            });
+
+            Parent fxml = loader.load();
+            rateController.setRoot(fxml);
+
+            contentArea.getChildren().removeAll();
+            contentArea.getChildren().setAll(rateController.getRoot());
+        }
     }
 
     @FXML
@@ -154,6 +169,7 @@ public class HelloController implements Initializable {
         return -1;
     }
     private void setupLabelWelcomeProfile(){
+        profile = database.getProfile();
         int index = getIndexProfile();
         if ( index != -1){
             String profleName = profile.get(index).getNazwa_profil();

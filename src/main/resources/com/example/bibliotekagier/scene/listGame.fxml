@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bibliotekagier.controllers.ListGameController">
    <children>
-      <TableView fx:id="tableColumn" prefHeight="483.0" prefWidth="558.0">
+      <TableView fx:id="tableColumn" layoutY="52.0" prefHeight="392.0" prefWidth="558.0">
         <columns>
           <TableColumn fx:id="tableColumnTitle" prefWidth="106.0" text="Tytuł" />
           <TableColumn fx:id="tableColumnSteam" prefWidth="44.0" text="Steam" />
@@ -17,6 +21,22 @@
             <TableColumn fx:id="tableColumnPhysical" prefWidth="91.0" text="Fizyczna Kopia" />
             <TableColumn fx:id="tableColumnStatus" prefWidth="88.0" text="Status" />
         </columns>
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#buttonDel" text="Usuń" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
       </TableView>
+      <AnchorPane prefHeight="52.0" prefWidth="558.0" style="-fx-background-color: #ff3333;">
+         <children>
+            <Label layoutX="135.0" prefHeight="52.0" prefWidth="179.0" text="Lista Gier" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

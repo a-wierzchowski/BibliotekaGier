@@ -29,5 +29,6 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="140.0" prefHeight="52.0" prefWidth="61.0" text="Wyszukaj Tytuł" textAlignment="CENTER" wrapText="true" />
       <TextField fx:id="textFieldFindTitle" layoutX="130.0" layoutY="153.0" onKeyTyped="#textFieldFindTitleAction" />
       <Label fx:id="labelResult" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="66.0" prefHeight="52.0" prefWidth="522.0" textFill="#c90e0e" wrapText="true" />
+      <Label alignment="CENTER" layoutX="330.0" layoutY="101.0" prefHeight="17.0" prefWidth="199.0" text="Lista gier" />
    </children>
 </AnchorPane>

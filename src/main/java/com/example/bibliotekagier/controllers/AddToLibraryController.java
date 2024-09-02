@@ -55,6 +55,7 @@ public class AddToLibraryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupComboBoxStatus();
         setupComboBoxPlatformy();
+        textFieldFindTitleAction(null);
     }
 
     private void setupComboBoxPlatformy(){
@@ -85,10 +86,13 @@ public class AddToLibraryController implements Initializable {
     @FXML
     public void textFieldFindTitleAction(Event event) {
         String title = textFieldFindTitle.getText().toUpperCase();
+        List<Gry> query;
         if (title.isEmpty()) {
-            return;
+            query = database.getGry();
         }
-        List<Gry> query = database.findTitleGame(title);
+        else{
+            query = database.findTitleGame(title);
+        }
         List<String> listaTitle = new ArrayList<>();
 
         String temp;

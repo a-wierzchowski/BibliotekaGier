@@ -90,6 +90,7 @@ public class ProfileController implements Initializable {
 
     }
 
+
     private void setupListViewProfile(){
 
         profile = database.getProfile();
@@ -127,7 +128,18 @@ public class ProfileController implements Initializable {
 
     @FXML
     public void edit(ActionEvent actionEvent) throws IOException {
-        contentAreaProfileEdit.setVisible(true);
+        if (indexListViewProfile == -1){
+            labelWybierzProfil.setText("Nie wybrano żadnego profilu");
+        }
+        else {
+            if (contentAreaProfileEdit.isVisible()){
+                contentAreaProfileEdit.setVisible(false);
+            }
+            else {
+                contentAreaProfileEdit.setVisible(true);
+                contentAreaProfileDelete.setVisible(false);
+            }
+        }
     }
 
     @FXML
@@ -143,13 +155,16 @@ public class ProfileController implements Initializable {
             Profil profil = profile.get(indexListViewProfile);
             Long index = profil.getId_profilu();
 
-            if (name.equals("____BRAK____")){
+            if (name.equals("____BRAK____") || name.isEmpty()){
                 labelWybierzProfil.setText("Nie można nadać takiej nazwy");
             }
-            else if (profil.getNazwa_profil().equals("____BRAK____")  && (name.isEmpty() || apiKey.isEmpty() || login.isEmpty()) ){
-                labelWybierzProfil.setText("Przy dodawaniu profilu uzupełnij wszystkie pola");
-            }
             else {
+                if (apiKey.isEmpty()){
+                    apiKey = ("____BRAK____");
+                }
+                if (login.isEmpty()){
+                    login = ("____BRAK____");
+                }
                 setupLabelWybierzProfil();
                 database.updateProfile(index, name, apiKey, login);
                 setupListViewProfile();
@@ -164,7 +179,13 @@ public class ProfileController implements Initializable {
             labelWybierzProfil.setText("Nie wybrano żadnego profilu");
         }
         else {
-            contentAreaProfileDelete.setVisible(true);
+            if (contentAreaProfileDelete.isVisible()){
+                contentAreaProfileDelete.setVisible(false);
+            }
+            else {
+                contentAreaProfileEdit.setVisible(false);
+                contentAreaProfileDelete.setVisible(true);
+            }
         }
     }
 
@@ -175,8 +196,13 @@ public class ProfileController implements Initializable {
 
         if (buttonId.equals("tak")){
             Long index = profile.get(indexListViewProfile).getId_profilu();
+
+            System.out.println(index);
+
             String remove = "____BRAK____";
             database.updateProfile(index, remove, remove, remove);
+            database.deleteOcenyGier(index);
+            database.deletePosiadane(index);
             setupListViewProfile();
         }
 

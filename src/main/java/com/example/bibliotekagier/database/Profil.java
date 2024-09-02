@@ -19,6 +19,8 @@ public class Profil {
 
     @OneToMany(mappedBy = "id_profilu", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Posiadane> posiadane = new HashSet<>();
+    @OneToMany(mappedBy = "id_profilu", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OcenyGier> ocenyGier = new HashSet<>();
 
     public void setId_profilu(Long id_profilu) {
         this.id_profilu = id_profilu;

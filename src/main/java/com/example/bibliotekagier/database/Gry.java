@@ -16,6 +16,9 @@ public class Gry {
     @OneToMany(mappedBy = "id_gry", cascade = CascadeType.ALL, orphanRemoval = true)  // SascadeType.All - odpowiada za dodawanie/usuwanie wszędzie w powiązanych
     private Set<Posiadane> posiadane = new HashSet<>();
 
+    @OneToMany(mappedBy = "id_gry", cascade = CascadeType.ALL, orphanRemoval = true)  // SascadeType.All - odpowiada za dodawanie/usuwanie wszędzie w powiązanych
+    private Set<OcenyGier> ocenyGier = new HashSet<>();
+
     public void setId_gry(Long id_gry) {
         this.id_gry = id_gry;
     }
